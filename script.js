@@ -83,3 +83,20 @@ import React, {
         });
       };
     
+
+      const draw = () => {
+        const $c = $ctx.current;
+        if (!$c) return;
+        $c.clearRect(0, 0, win.current.w, win.current.h);
+    
+        // debug()
+        lines();
+    
+        rafID.current = requestAnimationFrame(draw);
+      };
+    
+     
+      const getCell = (x, y) => {
+        const id = Math.floor(y / opt.size) * opt.rows + Math.floor(x / opt.size);
+        return id;
+      }; 
