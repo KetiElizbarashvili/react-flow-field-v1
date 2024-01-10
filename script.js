@@ -33,3 +33,15 @@ import React, {
     
     
     
+      const Canvas = () => {
+        const $canvas = useRef();
+        const $ctx = useRef();
+        const $bg = useRef();
+        const mouse = useRef({ x: window.innerWidth * .5, y: window.innerHeight * .5, prevX: 0, prevY: 0, speed: 0 });
+        const win = useRef({ w: 0, h: 0 });
+      
+        const grid = useRef([]);
+        const line = useRef([]);
+        const rafID = useRef();
+        const noise = createNoise3D();
+      }      
