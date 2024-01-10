@@ -45,3 +45,41 @@ import React, {
         const rafID = useRef();
         const noise = createNoise3D();
       }      
+
+
+      const lines = () => {
+        const $c = $ctx.current;
+        $c.globalCompositeOperation = 'screen';
+        $c.lineWidth = 1;
+        line.current.forEach((l, i) => {
+          l.forEach(({ x, y }) => {
+            const x1 = x - (win.current.w - opt.size * opt.cols) * .5;
+            const y1 = y - (win.current.h - opt.size * opt.rows) * .5;
+    
+            if (x1 > 0 && x1 < opt.size * opt.cols && y1 > 0 && y1 < opt.size * opt.rows) {
+    
+              $c.save();
+              $c.beginPath();
+              $c.translate(x, y);
+              const id = getCell(x1, y1);
+              $c.moveTo(0, 0);
+    
+    
+              const { rot } = grid.current[id + (i % 3 * Math.random() > .5 ? 1 : -1)];
+              const newX = Math.sin(rot + Math.PI * .5) * opt.speed;
+              const newY = Math.cos(rot - Math.PI * .5) * opt.speed;
+              $c.lineTo(newX, newY);
+              $c.stroke();
+              $c.restore();
+    
+              if (!l.drawed) {
+                line.current.push([{
+                  x: x + newX, y: y + newY }]);
+    
+                l.drawed = true;
+              }
+            }
+          });
+        });
+      };
+    
